@@ -1,7 +1,8 @@
 import React from "react";
-import { AppleFilled } from "@ant-design/icons";
-import { Button, Col, Input, Row } from "antd";
+import { Button, Col, Input, Row, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
+
+const { Title } = Typography;
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
@@ -22,8 +23,9 @@ const SignUp: React.FC = () => {
           span={24}
         >
           <div style={{ width: "30%" }}>
-            <AppleFilled style={{ fontSize: "45px", width: "100%" }} />
-
+            <Title style={{ textAlign: "center" }} level={2}>
+              GreenSolution Registration
+            </Title>
             <Input style={{ marginTop: "1rem" }} placeholder="First name" />
             <Input style={{ marginTop: "1rem" }} placeholder="Last name" />
             <Row style={{ marginTop: "1rem" }} gutter={8}>
@@ -37,8 +39,8 @@ const SignUp: React.FC = () => {
 
             <Button
               type="primary"
-              style={{ marginTop: "75px", width: "100%", marginBottom: "10px" }}
-              onClick={navigateSign}
+              style={{ marginTop: "25px", width: "100%", marginBottom: "10px" }}
+              onClick={() => navigateSign()}
             >
               Sign Up
             </Button>

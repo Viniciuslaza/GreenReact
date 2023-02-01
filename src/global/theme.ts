@@ -1,0 +1,41 @@
+import { DefaultTheme } from 'styled-components';
+
+export const theme: DefaultTheme = {
+  colors: {
+    primary: {
+      100: '#f5f7fb',
+      200: '#BBC5E0',
+      300: '#8591C0',
+      400: '#545C9C',
+      500: '#272A74',
+      600: '#1A1960',
+      700: '#0F0C4B',
+      800: '#080531',
+      900: '#020113',
+    },
+    gray: {
+      100: '#F7F8F9',
+      150: '#DFE2E7',
+      200: '#C6CAD4',
+      300: '#979CAE',
+      400: '#6A6E86',
+      500: '#3E405C',
+      600: '#2F2F4A',
+      700: '#202037',
+      800: '#121223',
+      900: '#07060E',
+    },
+    danger: '#FF4D4F',
+    danger2: '#FF7875',
+    danger3: '#F5222D',
+    danger4: '#FFA39E',
+    warning: '#FFEC3D',
+    warning2: '#FFC53D',
+    dangerBG: '#FFF1F0',
+    success: '#73D13D',
+    success2: '#52C41A',
+    accentColor: '#00BBDD',
+    componentsBackground: '#FFFFFF',
+  },
+  fontFamily: `'Roboto', sans-serif`,
+};
