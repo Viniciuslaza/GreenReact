@@ -81,7 +81,7 @@ const Home: React.FC = () => {
               }}
               type="primary"
               onClick={() => {
-                navigate("/resgister-eventos");
+                navigate("/register-projects");
               }}
             >
               Cadastrar Eventos

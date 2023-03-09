@@ -16,7 +16,7 @@ export const getEventos = () =>
 export const postEventos = (title, description, image) =>
 
   addDoc(collection(db, 'Eventos'), {
-    image: 'https://s1.static.brasilescola.uol.com.br/be/conteudo/images/a-agricultura-uma-atividade-primaria-que-fornece-alimentos-materia-prima-para-industria-57b317bcc8349.jpg',
+    image: image,
     title: title,
     description: description,
     public: true

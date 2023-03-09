@@ -7,14 +7,15 @@ const { Title } = Typography;
 const { Text } = Typography;
 
 const RegisterEvents: React.FC = () => {
+  const [image, setImage] = useState<string>();
   const [title, setTitle] = useState<string>();
   const [description, setDescription] = useState<string>();
   const [empty, setEmpty] = useState<boolean>();
   const navigate = useNavigate();
 
   const handleRegister = () => {
-    if ((title && description !== "") || undefined) {
-      postEventos(title, description).then(() => {
+    if ((title && description !== "" && image) || undefined) {
+      postEventos(title, description, image).then(() => {
         setEmpty(false);
         navigate("/");
       });
@@ -52,6 +53,16 @@ const RegisterEvents: React.FC = () => {
         >
           <div style={{ width: "40%", marginLeft: "75px" }}>
             <Title level={2}>Cadastro de novo evento</Title>
+            <Text>Adicione uma foto</Text>
+            <Input
+              onChange={(e) => {
+                setImage(e.target.value);
+              }}
+              value={image}
+              style={{ marginBottom: "1rem" }}
+              size="large"
+              placeholder="Imagem"
+            />
             <Text>Escreva o titulo do eventos</Text>
             <Input
               onChange={(e) => {

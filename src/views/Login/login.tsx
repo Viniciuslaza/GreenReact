@@ -8,10 +8,11 @@ import {
   EyeTwoTone,
   EyeInvisibleOutlined,
 } from "@ant-design/icons";
-import { Col, Tooltip } from "antd";
+import { Col, Tooltip, Typography } from "antd";
 import Link from "antd/es/typography/Link";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "services/firebase";
 import {
   ButtonLogin,
   ButtonSignUp,
@@ -23,15 +24,19 @@ import {
   InputPassword,
   PrincipalRow,
 } from "./loginStyle";
-import { auth } from "../../services/firebase";
 
-const Login: React.FC = () => {
+type PropsAuth = {
+  userLogged: any;
+};
+
+const Login: React.FC<PropsAuth> = ({ userLogged }) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<any>("");
   const [password, setPassword] = useState<any>("");
-  const [screenW, setscreenW] = useState(window.screen.width);
+  const [screenW, setScreenW] = useState(window.screen.width);
+  const [errorCode, setErrorCode] = useState<string>();
   window.addEventListener("resize", () => {
-    setscreenW(window.screen.width);
+    setScreenW(window.screen.width);
   });
 
   function navigateSign(): void {
@@ -46,14 +51,13 @@ const Login: React.FC = () => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
-        const { user } = userCredential;
+        const token = userCredential.user;
+        localStorage.setItem("myCurrentUser", JSON.stringify(token));
+        userLogged(true);
         navigate("/");
-        // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        setErrorCode(error.code);
       });
   };
 
@@ -94,6 +98,11 @@ const Login: React.FC = () => {
                 )
               }
             />
+            {errorCode === "auth/wrong-password" && (
+              <Typography.Text style={{ color: "red" }}>
+                Senha ou E-mail estão incorretos
+              </Typography.Text>
+            )}
             <ButtonLogin onClick={handleLogin} type="primary">
               Login
             </ButtonLogin>
