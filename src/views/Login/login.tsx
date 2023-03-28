@@ -40,11 +40,11 @@ const Login: React.FC<PropsAuth> = ({ userLogged }) => {
   });
 
   function navigateSign(): void {
-    navigate("/signup");
+    navigate("/sign-up");
   }
 
   function navigateForgot(): void {
-    navigate("/forgotpassword");
+    navigate("/forgot-password");
   }
 
   const handleLogin = (e: any): void => {
@@ -107,7 +107,7 @@ const Login: React.FC<PropsAuth> = ({ userLogged }) => {
               Login
             </ButtonLogin>
             <Link onClick={navigateForgot} target="_blank">
-              Forgot your password?
+              Esqueci minha senha?
             </Link>
 
             <ButtonSignUp

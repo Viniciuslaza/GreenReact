@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Col, Divider, Input, Row, Typography } from "antd";
-import { postEventos } from "services/dbFunctions";
+import { postProjects } from "services/dbFunctions";
 import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
@@ -15,7 +15,7 @@ const RegisterEvents: React.FC = () => {
 
   const handleRegister = () => {
     if ((title && description !== "" && image) || undefined) {
-      postEventos(title, description, image).then(() => {
+      postProjects(title, description, image).then(() => {
         setEmpty(false);
         navigate("/");
       });
@@ -63,8 +63,9 @@ const RegisterEvents: React.FC = () => {
               size="large"
               placeholder="Imagem"
             />
-            <Text>Escreva o titulo do eventos</Text>
+            <Text>Escreva o titulo do projeto</Text>
             <Input
+              maxLength={100}
               onChange={(e) => {
                 setTitle(e.target.value);
               }}

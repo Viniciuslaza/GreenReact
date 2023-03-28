@@ -9,7 +9,7 @@ const Forgot: React.FC = () => {
   const navigate = useNavigate();
 
   function navigateSign() {
-    navigate("/signup");
+    navigate("/sign-up");
   }
 
   return (

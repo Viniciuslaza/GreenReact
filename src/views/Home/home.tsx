@@ -6,7 +6,7 @@ import { Content, Footer } from "antd/es/layout/layout";
 import CardHome from "components/cardEvent";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getEventos } from "services/dbFunctions";
+import { getProjects } from "services/dbFunctions";
 import {
   BarRight,
   DisplayPage,
@@ -21,12 +21,12 @@ const Home: React.FC = () => {
   window.addEventListener("resize", () => {
     setscreenW(window.screen.width);
   });
-  const [eventos, setEventos] = useState<any[]>([]);
+  const [projects, setProjects] = useState<any[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getEventos().then((result) => {
-      setEventos(result);
+    getProjects().then((result) => {
+      setProjects(result);
     });
   }, []);
 
@@ -37,7 +37,7 @@ const Home: React.FC = () => {
   const titles = [
     {
       id: 1,
-      name: "Eventos",
+      name: "Projetos",
     },
     {
       id: 2,
@@ -84,7 +84,7 @@ const Home: React.FC = () => {
                 navigate("/register-projects");
               }}
             >
-              Cadastrar Eventos
+              Cadastro de Projetos
             </Button>
           </MenuBar>
           <Content style={{ padding: "15px" }}>
@@ -92,7 +92,7 @@ const Home: React.FC = () => {
               <div
                 style={{ display: "flex", padding: "5px", flexWrap: "wrap" }}
               >
-                {eventos?.map((item, i) => (
+                {projects?.map((item, i) => (
                   <CardHome
                     key={i}
                     title={item.title}

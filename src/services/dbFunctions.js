@@ -1,21 +1,30 @@
 /* eslint-disable no-undef */
 /* eslint-disable object-shorthand */
 
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { addDoc, collection, getDocs } from 'firebase/firestore';
-import { db } from "./firebase";
+import { auth, db } from "./firebase";
 
+export const createUser = (email, password, payload) =>
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      addDoc(collection(db, 'Users'), {
+        ...payload
+      })
+    })
+    .catch(err => setError(err.message))
 
-export const getEventos = () =>
-  getDocs(collection(db, 'Eventos')).then((querySnapshot) =>
+export const getProjects = () =>
+  getDocs(collection(db, 'Projects')).then((querySnapshot) =>
 
     querySnapshot.docs.map((doc) => ({
       ...doc.data()
     }))
   );
 
-export const postEventos = (title, description, image) =>
+export const postProjects = (title, description, image) =>
 
-  addDoc(collection(db, 'Eventos'), {
+  addDoc(collection(db, 'Projects'), {
     image: image,
     title: title,
     description: description,
