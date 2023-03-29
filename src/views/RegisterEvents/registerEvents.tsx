@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import { Button, Col, Divider, Input, Row, Typography } from "antd";
-import { postEventos } from "services/dbFunctions";
+import { postProjects } from "services/dbFunctions";
 import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
 const { Text } = Typography;
 
 const RegisterEvents: React.FC = () => {
+  const [image, setImage] = useState<string>();
   const [title, setTitle] = useState<string>();
   const [description, setDescription] = useState<string>();
   const [empty, setEmpty] = useState<boolean>();
   const navigate = useNavigate();
 
   const handleRegister = () => {
-    if ((title && description !== "") || undefined) {
-      postEventos(title, description).then(() => {
+    if ((title && description !== "" && image) || undefined) {
+      postProjects(title, description, image).then(() => {
         setEmpty(false);
         navigate("/");
       });
@@ -52,8 +53,19 @@ const RegisterEvents: React.FC = () => {
         >
           <div style={{ width: "40%", marginLeft: "75px" }}>
             <Title level={2}>Cadastro de novo evento</Title>
-            <Text>Escreva o titulo do eventos</Text>
+            <Text>Adicione uma foto</Text>
             <Input
+              onChange={(e) => {
+                setImage(e.target.value);
+              }}
+              value={image}
+              style={{ marginBottom: "1rem" }}
+              size="large"
+              placeholder="Imagem"
+            />
+            <Text>Escreva o titulo do projeto</Text>
+            <Input
+              maxLength={100}
               onChange={(e) => {
                 setTitle(e.target.value);
               }}
