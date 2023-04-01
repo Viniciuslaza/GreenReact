@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Button, Col, Divider, Input, Row, Typography } from "antd";
 import { postProjects } from "services/dbFunctions";
 import { useNavigate } from "react-router-dom";
+import { PageHeader } from "components/PageHeader";
 
-const { Title } = Typography;
 const { Text } = Typography;
 
 const RegisterEvents: React.FC = () => {
@@ -27,18 +27,7 @@ const RegisterEvents: React.FC = () => {
   return (
     <>
       <Row>
-        <Col
-          style={{
-            display: "flex",
-            justifyContent: "start",
-            alignItems: "start",
-          }}
-          span={5}
-        >
-          <div style={{ marginLeft: "75px" }}>
-            <Title level={5}>Novo Evento</Title>
-          </div>
-        </Col>
+        <PageHeader backOption title="Cadastro de projeto" />
         <Divider
           style={{ width: "30px", marginLeft: "75px", marginRight: "75px" }}
           plain
@@ -52,7 +41,6 @@ const RegisterEvents: React.FC = () => {
           span={24}
         >
           <div style={{ width: "40%", marginLeft: "75px" }}>
-            <Title level={2}>Cadastro de novo evento</Title>
             <Text>Adicione uma foto</Text>
             <Input
               onChange={(e) => {

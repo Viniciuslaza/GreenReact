@@ -25,16 +25,13 @@ import {
   PrincipalRow,
 } from "./loginStyle";
 
-type PropsAuth = {
-  userLogged: any;
-};
-
-const Login: React.FC<PropsAuth> = ({ userLogged }) => {
+const Login: React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<any>("");
   const [password, setPassword] = useState<any>("");
   const [screenW, setScreenW] = useState(window.screen.width);
   const [errorCode, setErrorCode] = useState<string>();
+
   window.addEventListener("resize", () => {
     setScreenW(window.screen.width);
   });
@@ -47,14 +44,14 @@ const Login: React.FC<PropsAuth> = ({ userLogged }) => {
     navigate("/forgot-password");
   }
 
-  const handleLogin = (e: any): void => {
+  const handleLogin = async (e: any): Promise<void> => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const token = userCredential.user;
-        localStorage.setItem("myCurrentUser", JSON.stringify(token));
-        userLogged(true);
-        navigate("/");
+    await signInWithEmailAndPassword(auth, email, password)
+      .then(({ user }) => {
+        user.getIdToken().then((result) => {
+          localStorage.setItem("myCurrentUser", result);
+          navigate("/");
+        });
       })
       .catch((error) => {
         setErrorCode(error.code);
