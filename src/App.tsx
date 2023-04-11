@@ -5,6 +5,7 @@ import Home from "views/Home/home";
 import RegisterEvents from "views/RegisterEvents/registerEvents";
 import Signup from "views/SignUp/view/ModalView/signup";
 import ParticipantRegistration from "views/SignUp/view/ParticipantView";
+import VisitantRegistration from "views/SignUp/view/VisitantView";
 import "./App.css";
 import Forgot from "./views/ForgotPassword/forgot";
 import Login from "./views/Login/login";
@@ -31,7 +32,7 @@ const App = () => (
       <Route path="/login" element={<Login />} />
       <Route path="/sign-up" element={<Signup />} />
       <Route path="/participant" element={<ParticipantRegistration />} />
-      <Route path="/visitor" element={<ParticipantRegistration />} />
+      <Route path="/visitor" element={<VisitantRegistration />} />
       <Route path="/forgot-password" element={<Forgot />} />
     </Routes>
   </BrowserRouter>

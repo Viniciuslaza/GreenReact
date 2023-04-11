@@ -112,7 +112,7 @@ const Login: React.FC = () => {
               style={{ marginTop: "75px", width: "100%", marginBottom: "10px" }}
               onClick={navigateSign}
             >
-              Sign Up
+              Cadastre-se
             </ButtonSignUp>
           </DivInside>
         </ColMain>

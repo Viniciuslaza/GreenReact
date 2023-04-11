@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable object-shorthand */
 
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { auth, db } from "./firebase";
 
@@ -23,14 +23,14 @@ export const getProjects = () =>
   );
 
 export const postProjects = (title, description, image) =>
-
   addDoc(collection(db, 'Projects'), {
     image: image,
     title: title,
     description: description,
     public: true
-  }).then(() => {
-    console.log('foi')
-  }).catch((error) => {
-    console.log(error)
-  })
+  }).then((result) => result).catch((error) => error)
+
+
+export const sendResetCode = (email) =>
+  sendPasswordResetEmail(auth, email)
+    .then((result) => result).catch((error) => error)

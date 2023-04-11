@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   &&& {
@@ -63,6 +63,11 @@ export const GlobalStyle = createGlobalStyle`
 
     .ant-layout-sider-trigger {
       font-size: 20px;
+    }
+
+    .ant-btn-primary {
+      border-radius: 2;
+      box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
     }
   }
 `;

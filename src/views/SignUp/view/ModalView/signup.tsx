@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Form, Modal, Radio, RadioChangeEvent } from "antd";
+import { Form, Radio, RadioChangeEvent } from "antd";
 import { useNavigate } from "react-router-dom";
-import { Container } from "./Style";
+import { Container, StyledModal } from "./Style";
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Signup: React.FC = () => {
   return (
     <>
       <Container src="assets/forest.jpg" />
-      <Modal
+      <StyledModal
         title="Como você deseja se cadastrar?"
         open={isModalOpen}
         onOk={form.submit}
@@ -52,7 +52,7 @@ const Signup: React.FC = () => {
             </Radio.Group>
           </Form.Item>
         </Form>
-      </Modal>
+      </StyledModal>
     </>
   );
 };

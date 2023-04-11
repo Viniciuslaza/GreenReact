@@ -1,8 +1,15 @@
 import React, { useState } from "react";
-import { Button, Col, Divider, Input, Row, Typography } from "antd";
+import { Input, Row, Typography } from "antd";
 import { postProjects } from "services/dbFunctions";
 import { useNavigate } from "react-router-dom";
 import { PageHeader } from "components/PageHeader";
+import {
+  ButtonContinueStyled,
+  InputStyled,
+  StyledCol,
+  StyledDiv,
+  StyledDivider,
+} from "./Style";
 
 const { Text } = Typography;
 
@@ -28,37 +35,25 @@ const RegisterEvents: React.FC = () => {
     <>
       <Row>
         <PageHeader backOption title="Cadastro de projeto" />
-        <Divider
-          style={{ width: "30px", marginLeft: "75px", marginRight: "75px" }}
-          plain
-        />
-        <Col
-          style={{
-            display: "flex",
-            justifyContent: "start",
-            alignItems: "center",
-          }}
-          span={24}
-        >
-          <div style={{ width: "40%", marginLeft: "75px" }}>
+        <StyledDivider plain />
+        <StyledCol span={24}>
+          <StyledDiv>
             <Text>Adicione uma foto</Text>
-            <Input
+            <InputStyled
               onChange={(e) => {
                 setImage(e.target.value);
               }}
               value={image}
-              style={{ marginBottom: "1rem" }}
               size="large"
               placeholder="Imagem"
             />
             <Text>Escreva o titulo do projeto</Text>
-            <Input
+            <InputStyled
               maxLength={100}
               onChange={(e) => {
                 setTitle(e.target.value);
               }}
               value={title}
-              style={{ marginBottom: "1rem" }}
               size="large"
               placeholder="Titulo"
             />
@@ -78,15 +73,14 @@ const RegisterEvents: React.FC = () => {
                 </p>
               </div>
             )}
-            <Button
+            <ButtonContinueStyled
               type="primary"
-              style={{ marginTop: "25px", width: "100%", marginBottom: "10px" }}
               onClick={() => handleRegister()}
             >
               Continue
-            </Button>
-          </div>
-        </Col>
+            </ButtonContinueStyled>
+          </StyledDiv>
+        </StyledCol>
       </Row>
     </>
   );
