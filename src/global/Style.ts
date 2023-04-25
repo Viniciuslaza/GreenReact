@@ -1,6 +1,19 @@
+import styled from "styled-components";
 import { Layout, Menu } from "antd";
 import { Content } from "antd/es/layout/layout";
-import styled from "styled-components";
+
+
+export const StyledLayout = styled(Layout)`
+  min-height: 100vh;
+`;
+
+export const StyledContent = styled(Content)`
+  &&& {
+    min-height: calc(100vh - 5.75rem);
+    padding: 0px 24px;
+    overflow: hidden;
+  }
+`;
 
 export const LayoutMain = styled(Layout)`
   min-height: 100vh;
@@ -22,13 +35,5 @@ export const MenuList = styled(Menu)`
   &&& {
     background: white;
     border-radius: 5px;
-  }
-`;
-
-export const StyledContent = styled(Content)`
-  &&& {
-    min-height: calc(100vh - 5.75rem);
-    padding: 0px 24px;
-    overflow: hidden;
   }
 `;

@@ -1,25 +1,25 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable arrow-body-style */
-import { Button, theme } from "antd";
-import { Content, Footer } from "antd/es/layout/layout";
+import { Button, Layout, Menu, theme } from "antd";
+import { Content, Footer, Header } from "antd/es/layout/layout";
 import CardHome from "components/cardEvent";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getProjects } from "services/dbFunctions";
+import Sider from "antd/es/layout/Sider";
+import { HeaderLayout } from "components/Header/header";
 import {
   BarRight,
-  DisplayPage,
   LayoutMain,
-  LogoDiv,
-  MenuBar,
   MenuList,
+  StyledContent,
 } from "./homeStyle";
 
 const Home: React.FC = () => {
-  const [screenW, setscreenW] = useState(window.screen.width);
+  const [screenW, setScreenW] = useState(window.screen.width);
   window.addEventListener("resize", () => {
-    setscreenW(window.screen.width);
+    setScreenW(window.screen.width);
   });
   const [projects, setProjects] = useState<any[]>([]);
   const navigate = useNavigate();
@@ -34,60 +34,12 @@ const Home: React.FC = () => {
     token: { colorBgContainer },
   } = theme.useToken();
 
-  const titles = [
-    {
-      id: 1,
-      name: "Projetos",
-    },
-    {
-      id: 2,
-      name: "Comunidade",
-    },
-    {
-      id: 3,
-      name: "Atividades",
-    },
-    {
-      id: 4,
-      name: "Sobre",
-    },
-    {
-      id: 5,
-      name: "Perfil",
-    },
-  ];
 
   return (
     <>
-      <DisplayPage>
-        <LayoutMain>
-          <MenuBar>
-            <LogoDiv
-              preview={false}
-              src="https://www.greensolutionscr.com/image/cache//data/logotipo_greensolutions_nuevo-2923x1559.png"
-            />
-            <MenuList
-              mode="horizontal"
-              defaultSelectedKeys={["1"]}
-              items={titles.map((item) => ({
-                key: item.id,
-                label: item.name,
-              }))}
-            />
-            <BarRight />
-            <Button
-              style={{
-                marginTop: "15px",
-              }}
-              type="primary"
-              onClick={() => {
-                navigate("/register-projects");
-              }}
-            >
-              Cadastro de Projetos
-            </Button>
-          </MenuBar>
-          <Content style={{ padding: "15px" }}>
+      <LayoutMain>
+        <Layout>
+          <StyledContent style={{ padding: "15px" }}>
             <LayoutMain style={{ background: colorBgContainer }}>
               <div
                 style={{ display: "flex", padding: "5px", flexWrap: "wrap" }}
@@ -95,6 +47,7 @@ const Home: React.FC = () => {
                 {projects?.map((item, i) => (
                   <CardHome
                     key={i}
+                    navigation={() => navigate(`/detalhes/${item?.id}`)}
                     title={item.title}
                     description={item.description}
                     public={item.public}
@@ -103,16 +56,9 @@ const Home: React.FC = () => {
                 ))}
               </div>
             </LayoutMain>
-          </Content>
-          <Footer
-            style={{
-              textAlign: "center",
-            }}
-          >
-            Ant Design ©2023 Created by Ant UED
-          </Footer>
-        </LayoutMain>
-      </DisplayPage>
+          </StyledContent>
+        </Layout>
+      </LayoutMain>
     </>
   );
 };

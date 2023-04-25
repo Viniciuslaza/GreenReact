@@ -2,23 +2,31 @@
 /* eslint-disable react/destructuring-assignment */
 import React from "react";
 import { Card } from "antd";
+import { ImageCard } from "./style";
 
 const { Meta } = Card;
 
 interface Props {
   // eslint-disable-next-line react/no-unused-prop-types
   public?: boolean;
-  title?: String;
-  description?: String;
-  image?: any;
+  title?: string;
+  description?: string;
+  image?: string;
+  navigation: any;
 }
 
-const CardHome: React.FC<Props> = (props: Props) => (
+const CardHome: React.FC<Props> = ({
+  title,
+  description,
+  image,
+  navigation,
+}) => (
   <Card
-    style={{ width: "24.1%", margin: "5px" }}
-    cover={<img alt="example" src={props?.image} />}
+    onClick={navigation}
+    style={{ width: "20.1%", margin: "5px", cursor: "pointer" }}
+    cover={<ImageCard alt="example" src={image} />}
   >
-    <Meta title={props.title} description={props.description} />
+    <Meta title={title} description={description} />
   </Card>
 );
 

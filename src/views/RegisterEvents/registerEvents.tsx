@@ -22,7 +22,13 @@ const RegisterEvents: React.FC = () => {
 
   const handleRegister = () => {
     if ((title && description !== "" && image) || undefined) {
-      postProjects(title, description, image).then(() => {
+      const payload = {
+        title,
+        description,
+        image,
+        public: true,
+      };
+      postProjects(payload).then(() => {
         setEmpty(false);
         navigate("/");
       });
