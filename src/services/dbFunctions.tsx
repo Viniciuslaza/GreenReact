@@ -28,14 +28,6 @@ export const createUser = (email, password, payload) =>
     })
     .catch((err) => err.message);
 
-// export const getUserById = (userId) =>
-//   getDoc(doc(db, "Users", userId)).then((docSnap) => {
-//     if (docSnap.exists()) {
-//       return { ...docSnap.data(), id: docSnap.id };
-//     }
-//     return null;
-//   });
-
 export const getUserById = async (userId) => {
   const q = query(collection(db, "Users"), where("id", "==", userId));
   const querySnapshot = await getDocs(q);
@@ -63,10 +55,7 @@ export const getProjectById = (projectId) =>
 
 export const postProjects = (values) =>
   addDoc(collection(db, "Projects"), {
-    image: values.image,
-    title: values.title,
-    description: values.description,
-    public: true,
+    ...values,
   })
     .then((result) => result)
     .catch((error) => error);
@@ -76,4 +65,4 @@ export const sendResetCode = (email) =>
     .then((result) => result)
     .catch((error) => error);
 
-// export const signOutUser = () => signOut(auth);
+export const signOutUser = () => signOut(auth);

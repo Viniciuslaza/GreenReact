@@ -8,7 +8,7 @@ import {
   stringToColor,
 } from "provider/UserProvider";
 
-import { getUserById } from "services/dbFunctions";
+import { getUserById, signOutUser } from "services/dbFunctions";
 import { StyledHeader } from "./style";
 
 const { Title } = Typography;
@@ -21,13 +21,14 @@ export const HeaderLayout = () => {
     getUserById(data?.user_id).then((result: any) => {
       setUserData(result[0]);
     });
-  }, [data]);
+  }, []);
 
-  // const logout = () => {
-  //   signOutUser().then(() => {
-  //     localStorage.removeItem("myCurrentUser");
-  //   });
-  // };
+  const handleLogout = () => {
+    signOutUser().then(() => {
+      localStorage.removeItem("myCurrentUser");
+      window.location.reload();
+    });
+  };
 
   return (
     <StyledHeader>
@@ -67,9 +68,9 @@ export const HeaderLayout = () => {
           <Button
             type="link"
             icon={<LogoutOutlined style={{ fontSize: 23 }} />}
-            // onClick={() => {
-            //   logout();
-            // }}
+            onClick={() => {
+              handleLogout();
+            }}
           />
         </Tooltip>
       </Row>

@@ -3,6 +3,7 @@ import { Input, Row, Typography } from "antd";
 import { postProjects } from "services/dbFunctions";
 import { useNavigate } from "react-router-dom";
 import { PageHeader } from "components/PageHeader";
+import { getInfoUser } from "provider/UserProvider";
 import {
   ButtonContinueStyled,
   InputStyled,
@@ -19,6 +20,7 @@ const RegisterEvents: React.FC = () => {
   const [description, setDescription] = useState<string>();
   const [empty, setEmpty] = useState<boolean>();
   const navigate = useNavigate();
+  const data = getInfoUser();
 
   const handleRegister = () => {
     if ((title && description !== "" && image) || undefined) {
@@ -27,6 +29,7 @@ const RegisterEvents: React.FC = () => {
         description,
         image,
         public: true,
+        user: data?.user_id,
       };
       postProjects(payload).then(() => {
         setEmpty(false);
@@ -64,10 +67,11 @@ const RegisterEvents: React.FC = () => {
               placeholder="Titulo"
             />
             <Text>Descreva o evento.</Text>
-            <Input
+            <Input.TextArea
               onChange={(e) => {
                 setDescription(e.target.value);
               }}
+              rows={5}
               value={description}
               size="large"
               placeholder="Descrição"

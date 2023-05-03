@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 export const StyledDivider = styled(Divider)`
   width: 30px;
-  margin-left: 75px;
   margin-right: 75px;
+  margin: 15px 0px;
 `;
 
 export const StyledCol = styled(Col)`
@@ -14,8 +14,8 @@ export const StyledCol = styled(Col)`
 `;
 
 export const StyledDiv = styled.div`
-  width: 40%;
-  margin-left: 75px;
+  width: 50%;
+  margin-left: 35px;
 `;
 
 export const InputStyled = styled(Input)`

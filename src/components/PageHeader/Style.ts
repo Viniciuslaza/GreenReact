@@ -16,17 +16,12 @@
  */
 
 import styled from "styled-components";
-import { Layout, Typography } from "antd";
+import { Typography } from "antd";
 
-const { Header } = Layout;
 const { Title } = Typography;
 
-export const StyledHeader = styled(Header)`
-  background-color: ${({ theme }) =>
-    theme.colors.componentsBackground} !important;
+export const StyledHeader = styled.div`
   height: 4rem;
-  padding-top: 1.5rem !important;
-  margin-left: 25px;
   display: flex;
   align-items: center;
   justify-content: space-between;

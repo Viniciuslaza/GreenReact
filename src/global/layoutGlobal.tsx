@@ -51,6 +51,7 @@ export const LayoutGlobal = ({ children }: { children: ReactElement }) => {
           <Button
             style={{
               marginTop: "15px",
+              marginLeft: "15px",
             }}
             type="primary"
             onClick={() => {
