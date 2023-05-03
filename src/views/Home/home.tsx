@@ -43,6 +43,7 @@ const Home: React.FC = () => {
                     key={i}
                     user_id={item.user}
                     userInfo={data}
+                    project_id={item.id}
                     navigation={() => navigate(`/detalhes/${item?.id}`)}
                     title={item.title}
                     description={item.description}

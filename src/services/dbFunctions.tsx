@@ -10,6 +10,7 @@ import {
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -44,6 +45,9 @@ export const getProjects = () =>
       ...doc.data(),
     }))
   );
+
+export const deleteProject = (projectId) =>
+  deleteDoc(doc(db, `Projects/${projectId}`));
 
 export const getProjectById = (projectId) =>
   getDoc(doc(db, `Projects/${projectId}`)).then((docSnap) => {

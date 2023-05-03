@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { Avatar, Row, Typography, Tooltip, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { LogoutOutlined } from "@ant-design/icons";
@@ -9,6 +11,7 @@ import {
 } from "provider/UserProvider";
 
 import { getUserById, signOutUser } from "services/dbFunctions";
+import { useNavigate } from "react-router-dom";
 import { StyledHeader } from "./style";
 
 const { Title } = Typography;
@@ -16,6 +19,7 @@ const { Title } = Typography;
 export const HeaderLayout = () => {
   const [userData, setUserData] = useState<any>();
   const data = getInfoUser();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getUserById(data?.user_id).then((result: any) => {
@@ -34,7 +38,10 @@ export const HeaderLayout = () => {
     <StyledHeader>
       <Row align="middle">
         <img
-          style={{ paddingBottom: "10px" }}
+          onClick={() => {
+            navigate("/");
+          }}
+          style={{ paddingBottom: "10px", cursor: "pointer" }}
           src="assets/logo.png"
           alt="logo"
         />
