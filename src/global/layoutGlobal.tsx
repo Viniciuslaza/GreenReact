@@ -1,65 +1,99 @@
-import { ReactElement } from "react";
-import { Button, Layout, theme } from "antd";
-import { useNavigate } from "react-router-dom";
+import { ReactElement, useState } from "react";
+import { Layout, theme } from "antd";
+import { Link } from "react-router-dom";
 import { HeaderLayout } from "components/Header/header";
 import Sider from "antd/es/layout/Sider";
-import { BarRight, LayoutMain, MenuList, StyledContent } from "./Style";
+import {
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+  HomeOutlined,
+  FormOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { LayoutMain, MenuList, StyledContent } from "./Style";
 
 export const LayoutGlobal = ({ children }: { children: ReactElement }) => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  const navigate = useNavigate();
+  const [widthScreen, setWidthScreen] = useState<number>(window.innerWidth);
+  const [collapsed, setCollapsed] = useState<boolean>(false);
 
-  const titles = [
+  const resizePage = () => {
+    setWidthScreen(window.innerWidth);
+  };
+  window.addEventListener("resize", resizePage);
+
+  const items = [
     {
-      id: 1,
-      name: "Projetos",
+      key: "home",
+      icon: (
+        <Link to="/">
+          <HomeOutlined style={{ color: "black" }} />
+        </Link>
+      ),
+      label: <Link to="/">Projetos</Link>,
     },
     {
-      id: 2,
-      name: "Comunidade",
+      key: "registerProject",
+      icon: (
+        <Link to="/">
+          <FormOutlined style={{ color: "black" }} />
+        </Link>
+      ),
+      label: <Link to="/register-projects">Cadastrar projeto</Link>,
     },
     {
-      id: 3,
-      name: "Atividades",
+      key: "profile",
+      icon: (
+        <Link to="/">
+          <UserOutlined style={{ color: "black" }} />
+        </Link>
+      ),
+      label: <Link to="/perfil">Perfil</Link>,
     },
-    {
-      id: 4,
-      name: "Sobre",
-    },
-    {
-      id: 5,
-      name: "Perfil",
-    },
+    // {
+    //   key: "home",
+    //   icon: (
+    //     <Link to="/">
+    //       <HomeOutlined />
+    //     </Link>
+    //   ),
+    //   label: <Link to="/home">{t("home.HOME")}</Link>,
+    // },
+
+    // {
+    //   key: "home",
+    //   icon: (
+    //     <Link to="/">
+    //       <HomeOutlined />
+    //     </Link>
+    //   ),
+    //   label: <Link to="/home">{t("home.HOME")}</Link>,
+    // },
   ];
 
   return (
     <LayoutMain>
-      <HeaderLayout />
+      <HeaderLayout mobile={widthScreen < 550} />
       <Layout>
-        <Sider width={200} style={{ background: colorBgContainer }}>
+        <Sider
+          collapsible
+          collapsed={widthScreen < 550 || collapsed}
+          collapsedWidth={80}
+          onCollapse={(value) => setCollapsed(value)}
+          theme={"light" as any}
+          trigger={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          width={200}
+          style={{ background: colorBgContainer }}
+        >
           <MenuList
-            mode="vertical"
             defaultSelectedKeys={["1"]}
-            items={titles.map((item) => ({
-              key: item.id,
-              label: item.name,
-            }))}
+            defaultOpenKeys={["sub1"]}
+            mode="inline"
+            inlineCollapsed
+            items={items}
           />
-          <BarRight />
-          <Button
-            style={{
-              marginTop: "15px",
-              marginLeft: "15px",
-            }}
-            type="primary"
-            onClick={() => {
-              navigate("/register-projects");
-            }}
-          >
-            Cadastro de Projetos
-          </Button>
         </Sider>
         <StyledContent style={{ padding: "15px" }}>{children}</StyledContent>
       </Layout>

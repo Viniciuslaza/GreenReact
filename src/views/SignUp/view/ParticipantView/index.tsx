@@ -42,7 +42,7 @@ const ParticipantRegistration: React.FC = () => {
 
   return (
     <Row>
-      <PageHeader backOption title="Cadastro de parceiro" />
+      <PageHeader colored backOption title="Cadastro de parceiro" />
       <StyledColVisitant span={24}>
         <StyledDivVisitant>
           <Form

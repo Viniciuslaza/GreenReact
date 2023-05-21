@@ -27,7 +27,7 @@ const Detail: React.FC = () => {
         <Breadcrumb.Item>
           <Link to="/">Home</Link>
         </Breadcrumb.Item>
-        <Breadcrumb.Item>{id}</Breadcrumb.Item>
+        <Breadcrumb.Item>Detalhe do projeto</Breadcrumb.Item>
       </Breadcrumb>
       <DisplayPage>
         <LayoutMain>

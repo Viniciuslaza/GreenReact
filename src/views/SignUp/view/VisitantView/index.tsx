@@ -29,7 +29,7 @@ const VisitantRegistration: React.FC = () => {
 
   return (
     <Row>
-      <PageHeader backOption title="Cadastro de visitante" />
+      <PageHeader colored backOption title="Cadastro de visitante" />
       <StyledColVisitant span={24}>
         <StyledDivVisitant>
           <Form

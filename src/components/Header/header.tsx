@@ -16,7 +16,11 @@ import { StyledHeader } from "./style";
 
 const { Title } = Typography;
 
-export const HeaderLayout = () => {
+type HeaderProps = {
+  mobile: boolean;
+};
+
+export const HeaderLayout: React.FC<HeaderProps> = ({ mobile }) => {
   const [userData, setUserData] = useState<any>();
   const data = getInfoUser();
   const navigate = useNavigate();
@@ -47,7 +51,7 @@ export const HeaderLayout = () => {
         />
       </Row>
       <Row align="middle">
-        {userData && (
+        {userData && !mobile && (
           <Avatar
             style={{
               cursor: "pointer",
@@ -59,7 +63,7 @@ export const HeaderLayout = () => {
           </Avatar>
         )}
 
-        {userData && (
+        {userData && !mobile && (
           <Title
             style={{
               fontWeight: "500",

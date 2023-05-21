@@ -25,25 +25,39 @@ type Props = {
   title: string;
   rightContent?: ReactNode;
   backOption?: boolean;
+  colored?: boolean;
 };
 
 export const PageHeader: React.FC<Props> = ({
   title,
   rightContent,
   backOption,
+  colored,
 }) => {
   const navigate = useNavigate();
   return (
     <StyledHeader>
       <Row align="middle">
         {backOption && (
-          <Button
-            onClick={() => {
-              navigate(-1);
-            }}
-            icon={<ArrowLeftOutlined />}
-            type="link"
-          />
+          <div
+            style={
+              colored && {
+                backgroundColor: "#73D13D",
+                borderRadius: "4px",
+                marginLeft: "30px",
+                marginRight: "30px",
+              }
+            }
+          >
+            <Button
+              onClick={() => {
+                navigate(-1);
+              }}
+              style={colored && { paddingLeft: "10px" }}
+              icon={<ArrowLeftOutlined style={colored && { color: "black" }} />}
+              type="link"
+            />
+          </div>
         )}
         <Tooltip title={title}>
           <TitleHeader level={3}>

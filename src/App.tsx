@@ -17,6 +17,7 @@ import Detail from "views/DetailsProject/detail";
 import Forgot from "./views/ForgotPassword/forgot";
 import Login from "./views/Login/login";
 import { LayoutGlobal } from "./global/layoutGlobal";
+import Profile from "./views/Perfil/perfil";
 
 const App = () => (
   <BrowserRouter>
@@ -52,6 +53,14 @@ const App = () => (
           element={
             <ProtectedRoute>
               <RegisterEvents />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="perfil"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />
