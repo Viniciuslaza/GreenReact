@@ -5,6 +5,8 @@ export type IUser = {
   city: string;
   address: string;
   formation: string;
+  linkedin: string;
+  instagram: string;
   confirm?: string;
   password?: string;
 };

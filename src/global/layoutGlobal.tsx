@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Layout, theme } from "antd";
 import { Link } from "react-router-dom";
 import { HeaderLayout } from "components/Header/header";
@@ -10,6 +10,8 @@ import {
   FormOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { getUserById } from "services/dbFunctions";
+import { getInfoUser } from "provider/UserProvider";
 import { LayoutMain, MenuList, StyledContent } from "./Style";
 
 export const LayoutGlobal = ({ children }: { children: ReactElement }) => {
@@ -18,6 +20,14 @@ export const LayoutGlobal = ({ children }: { children: ReactElement }) => {
   } = theme.useToken();
   const [widthScreen, setWidthScreen] = useState<number>(window.innerWidth);
   const [collapsed, setCollapsed] = useState<boolean>(false);
+  const data = getInfoUser();
+  const [userData, setUserData] = useState<any>();
+
+  useEffect(() => {
+    getUserById(data?.user_id).then((result: any) => {
+      setUserData(result[0]);
+    });
+  }, []);
 
   const resizePage = () => {
     setWidthScreen(window.innerWidth);
@@ -34,7 +44,7 @@ export const LayoutGlobal = ({ children }: { children: ReactElement }) => {
       ),
       label: <Link to="/">Projetos</Link>,
     },
-    {
+    userData?.role !== "visitant" && {
       key: "registerProject",
       icon: (
         <Link to="/">

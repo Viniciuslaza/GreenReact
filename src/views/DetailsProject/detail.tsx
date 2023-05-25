@@ -1,26 +1,35 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable arrow-body-style */
-import { Breadcrumb, Typography } from "antd";
-import MenuBar from "components/MenuBar/menuBar";
+import { Avatar, Breadcrumb, Col, Row, Typography } from "antd";
 import { DisplayPage, LayoutMain } from "components/MenuBar/style";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getProjectById } from "services/dbFunctions";
-import { PageHeader } from "components/PageHeader";
+
+import { FullContentSpin } from "components/FullContentSpin";
+import { getNameLetters, stringToColor } from "provider/UserProvider";
 import { StyledImage, StyledImageDiv } from "./Style";
 
 const Detail: React.FC = () => {
   const { id } = useParams();
   const [project, setProject] = useState<any>();
+  const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const { Title } = Typography;
+
   useEffect(() => {
-    getProjectById(id).then((result: any) => {
-      setProject(result);
-    });
+    setLoading(true);
+    getProjectById(id)
+      .then((result: any) => {
+        setProject(result);
+      })
+      .finally(() => setLoading(false));
   }, [id]);
 
+  if (isLoading)
+    return <FullContentSpin style={{ height: "calc(100vh - 3.5rem)" }} />;
   return (
     <>
       <Breadcrumb style={{ paddingBottom: "10px" }}>
@@ -34,11 +43,61 @@ const Detail: React.FC = () => {
           <StyledImageDiv>
             <StyledImage src={project?.image} />
           </StyledImageDiv>
+          {project && (
+            <Row
+              onClick={() => navigate(`/perfil/${project?.user_hash_id}`)}
+              style={{ marginTop: "10px" }}
+              align="middle"
+            >
+              <Title
+                style={{
+                  fontWeight: "500",
+                  marginTop: "7px",
+                  marginRight: "10px",
+                }}
+                level={5}
+              >
+                Publicado por:
+              </Title>
+              <Row
+                style={{
+                  backgroundColor: "#b0bece",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
+              >
+                <Title
+                  style={{
+                    fontWeight: "400",
+                    marginTop: "7px",
+                    marginRight: "5px",
+                    paddingLeft: "15px",
+                  }}
+                  level={5}
+                >
+                  {project?.userName}
+                </Title>
+                <Avatar
+                  style={{
+                    marginTop: "8px",
+                    backgroundColor: stringToColor(project?.userName),
+                    marginRight: "15px",
+                  }}
+                  size="small"
+                >
+                  {getNameLetters(project?.userName)}
+                </Avatar>
+              </Row>
+            </Row>
+          )}
           <Typography.Title style={{ textAlign: "center" }}>
             {project?.title}
           </Typography.Title>
           <Typography.Text style={{ textAlign: "center" }}>
             {project?.description}
+          </Typography.Text>
+          <Typography.Text style={{ textAlign: "center" }}>
+            <a href={project?.link}>{project?.link}</a>
           </Typography.Text>
         </LayoutMain>
       </DisplayPage>

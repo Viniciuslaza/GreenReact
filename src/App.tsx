@@ -17,7 +17,7 @@ import Detail from "views/DetailsProject/detail";
 import Forgot from "./views/ForgotPassword/forgot";
 import Login from "./views/Login/login";
 import { LayoutGlobal } from "./global/layoutGlobal";
-import Profile from "./views/Perfil/perfil";
+import ProfileModule from "./views/Perfil/view";
 
 const App = () => (
   <BrowserRouter>
@@ -57,10 +57,10 @@ const App = () => (
           }
         />
         <Route
-          path="perfil"
+          path="perfil/*"
           element={
             <ProtectedRoute>
-              <Profile />
+              <ProfileModule />
             </ProtectedRoute>
           }
         />

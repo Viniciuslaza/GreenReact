@@ -22,6 +22,7 @@ const { Title } = Typography;
 
 export const StyledHeader = styled.div`
   height: 4rem;
+  margin-top: 0px;
   display: flex;
   align-items: center;
   justify-content: space-between;

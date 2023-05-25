@@ -32,9 +32,9 @@ export const stringToColor = (str: string) => {
 };
 
 export const getNameLetters = (str: any) => {
-  const firstLetters = str?.split(" ").map((word: string) => word.charAt(0));
+  const firstLetters = str?.split(" ")?.map((word: string) => word?.charAt(0));
   return (
-    firstLetters[0] + (firstLetters.length > 1 ? firstLetters.slice(-1) : "")
+    firstLetters[0] + (firstLetters?.length > 1 ? firstLetters.slice(-1) : "")
   );
 };
 

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input, Row, Typography } from "antd";
-import { postProjects } from "services/dbFunctions";
+import { getUserById, postProjects } from "services/dbFunctions";
 import { useNavigate } from "react-router-dom";
 import { PageHeader } from "components/PageHeader";
 import { getInfoUser } from "provider/UserProvider";
@@ -19,8 +19,16 @@ const RegisterEvents: React.FC = () => {
   const [title, setTitle] = useState<string>();
   const [description, setDescription] = useState<string>();
   const [empty, setEmpty] = useState<boolean>();
+  const [linksSupport, setLinksSupport] = useState<string>();
   const navigate = useNavigate();
   const data = getInfoUser();
+  const [userData, setUserData] = useState<any>();
+
+  useEffect(() => {
+    getUserById(data?.user_id).then((result: any) => {
+      setUserData(result[0]);
+    });
+  }, []);
 
   const handleRegister = () => {
     if ((title && description !== "" && image) || undefined) {
@@ -28,8 +36,11 @@ const RegisterEvents: React.FC = () => {
         title,
         description,
         image,
+        link: linksSupport,
         public: true,
-        user: data?.user_id,
+        user: userData?.id,
+        user_hash_id: data?.user_id,
+        userName: userData?.name,
       };
       postProjects(payload).then(() => {
         setEmpty(false);
@@ -65,6 +76,15 @@ const RegisterEvents: React.FC = () => {
               value={title}
               size="large"
               placeholder="Titulo"
+            />
+            <Text>Link de Suporte - (Opcional)</Text>
+            <InputStyled
+              onChange={(e) => {
+                setLinksSupport(e.target.value);
+              }}
+              value={linksSupport}
+              size="large"
+              placeholder="Link de apoio"
             />
             <Text>Descreva o evento.</Text>
             <Input.TextArea

@@ -5,7 +5,7 @@ import { Layout, theme } from "antd";
 import CardHome from "components/cardEvent";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getProjects } from "services/dbFunctions";
+import { getProjects, getUserById } from "services/dbFunctions";
 
 import { getInfoUser } from "provider/UserProvider";
 import { LayoutMain, StyledContent } from "./homeStyle";
@@ -18,10 +18,14 @@ const Home: React.FC = () => {
   const [projects, setProjects] = useState<any[]>([]);
   const navigate = useNavigate();
   const data = getInfoUser();
+  const [userData, setUserData] = useState<any>();
 
   useEffect(() => {
     getProjects().then((result) => {
       setProjects(result);
+    });
+    getUserById(data?.user_id).then((result: any) => {
+      setUserData(result[0]);
     });
   }, []);
 
@@ -42,7 +46,7 @@ const Home: React.FC = () => {
                   <CardHome
                     key={i}
                     user_id={item.user}
-                    userInfo={data}
+                    userInfo={userData}
                     project_id={item.id}
                     navigation={() => navigate(`/detalhes/${item?.id}`)}
                     title={item.title}

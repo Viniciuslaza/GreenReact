@@ -3,6 +3,7 @@ import {
   Col,
   Form,
   Input,
+  Modal,
   Radio,
   RadioChangeEvent,
   Row,
@@ -23,6 +24,7 @@ const ParticipantRegistration: React.FC = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [value, setValue] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleSignUp = (values: IUser) => {
     const payloadValues = {
@@ -267,14 +269,42 @@ const ParticipantRegistration: React.FC = () => {
             >
               <Input />
             </Form.Item>
+            <Form.Item name="linkedIn" label="LinkedIn -(Opcional)">
+              <Input placeholder="Deseja coloca o endereço do seu linkedIn?" />
+            </Form.Item>
+            <Form.Item name="instagram" label="Instagram -(Opcional)">
+              <Input placeholder="Deseja coloca o endereço do seu Instagram?" />
+            </Form.Item>
           </Form>
           <StyledDivButtonVisitant>
-            <StyledButton type="primary" onClick={form.submit}>
+            <StyledButton type="primary" onClick={() => setIsModalOpen(true)}>
               Cadastrar
             </StyledButton>
           </StyledDivButtonVisitant>
         </StyledDivVisitant>
       </StyledColVisitant>
+      <Modal
+        title="Termos de uso e cadastro"
+        open={isModalOpen}
+        onOk={form.submit}
+        okText="Concordo"
+        cancelText="Fechar"
+        onCancel={() => setIsModalOpen(false)}
+      >
+        <div>
+          <Typography.Text>
+            Ao cadastrar meus dados pessoais, declaro que li e aceito os termos
+            de cadastro de dados de usuários da empresa/organização. Declaro
+            estar ciente de que a empresa/organização poderá utilizar esses
+            dados para finalidades específicas, como comunicação, marketing e
+            prestação de serviços, sempre em conformidade com as normas de
+            proteção de dados pessoais vigentes. Declaro ainda que tenho plena
+            ciência de que posso solicitar o acesso, retificação, exclusão e
+            demais direitos previstos na legislação aplicável aos meus dados
+            pessoais.
+          </Typography.Text>
+        </div>
+      </Modal>
     </Row>
   );
 };

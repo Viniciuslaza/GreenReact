@@ -7,12 +7,15 @@ import {
 } from "provider/UserProvider";
 import { getUserById } from "services/dbFunctions";
 import { FullContentSpin } from "components/FullContentSpin";
+import { useParams } from "react-router-dom";
+import { PageHeader } from "components/PageHeader";
 import { LayoutMain } from "./Style";
 
 const Profile: React.FC = () => {
   const [userData, setUserData] = useState<any>();
   const data = getInfoUser();
   const [isLoading, setLoading] = useState(false);
+  const { id } = useParams();
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -24,7 +27,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     setLoading(true);
-    getUserById(data?.user_id)
+    getUserById(id || data?.user_id)
       .then((result: any) => {
         setUserData(result[0]);
       })
@@ -35,6 +38,7 @@ const Profile: React.FC = () => {
     return <FullContentSpin style={{ height: "calc(100vh - 3.5rem)" }} />;
   return (
     <>
+      <PageHeader title={id ? "Perfil do usuário" : "Seu perfil"} />
       <LayoutMain
         style={{
           background: colorBgContainer,
