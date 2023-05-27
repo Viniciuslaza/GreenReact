@@ -1,7 +1,16 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable arrow-body-style */
-import { Avatar, Breadcrumb, Col, Row, Typography } from "antd";
+import {
+  Avatar,
+  Breadcrumb,
+  Button,
+  Col,
+  Progress,
+  Row,
+  Typography,
+} from "antd";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { DisplayPage, LayoutMain } from "components/MenuBar/style";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -18,6 +27,28 @@ const Detail: React.FC = () => {
   const navigate = useNavigate();
 
   const { Title } = Typography;
+
+  const [percent, setPercent] = useState<number>(0);
+
+  const increase = () => {
+    setPercent((prevPercent) => {
+      const newPercent = prevPercent + 10;
+      if (newPercent > 100) {
+        return 100;
+      }
+      return newPercent;
+    });
+  };
+
+  const decline = () => {
+    setPercent((prevPercent) => {
+      const newPercent = prevPercent - 10;
+      if (newPercent < 0) {
+        return 0;
+      }
+      return newPercent;
+    });
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -99,6 +130,14 @@ const Detail: React.FC = () => {
           <Typography.Text style={{ textAlign: "center" }}>
             <a href={project?.link}>{project?.link}</a>
           </Typography.Text>
+          <Typography.Text style={{ marginTop: "20px", fontSize: "16px" }}>
+            Quanto você gostou disso?
+          </Typography.Text>
+          <Progress percent={percent} />
+          <Button.Group>
+            <Button onClick={decline} icon={<MinusOutlined />} />
+            <Button onClick={increase} icon={<PlusOutlined />} />
+          </Button.Group>
         </LayoutMain>
       </DisplayPage>
     </>

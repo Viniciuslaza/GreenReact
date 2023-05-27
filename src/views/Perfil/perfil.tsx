@@ -1,4 +1,5 @@
 import { Avatar, Col, Row, Typography, theme } from "antd";
+import { LinkedinOutlined, InstagramOutlined } from "@ant-design/icons";
 import React, { useState, useEffect } from "react";
 import {
   getInfoUser,
@@ -173,6 +174,30 @@ const Profile: React.FC = () => {
                   {userData?.formation}
                 </Typography.Text>
               </Col>
+              {userData?.linkedIn && (
+                <Col
+                  style={{ paddingTop: "60px" }}
+                  span={screenW > 500 ? 12 : 24}
+                >
+                  <a href={userData?.linkedIn}>
+                    <LinkedinOutlined
+                      style={{ fontSize: "55px", color: "#0288D1" }}
+                    />
+                  </a>
+                </Col>
+              )}
+              {userData?.instagram && (
+                <Col
+                  style={{ paddingTop: "60px" }}
+                  span={screenW > 500 ? 12 : 24}
+                >
+                  <a href={userData?.instagram}>
+                    <InstagramOutlined
+                      style={{ fontSize: "55px", color: "#fb3958" }}
+                    />
+                  </a>
+                </Col>
+              )}
             </>
           )}
         </Row>
