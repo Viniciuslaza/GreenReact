@@ -9,7 +9,6 @@ import {
 import { getUserById } from "services/dbFunctions";
 import { FullContentSpin } from "components/FullContentSpin";
 import { useParams } from "react-router-dom";
-import { PageHeader } from "components/PageHeader";
 import { LayoutMain } from "./Style";
 
 const Profile: React.FC = () => {
@@ -39,7 +38,6 @@ const Profile: React.FC = () => {
     return <FullContentSpin style={{ height: "calc(100vh - 3.5rem)" }} />;
   return (
     <>
-      <PageHeader title={id ? "Perfil do usuário" : "Seu perfil"} />
       <LayoutMain
         style={{
           background: colorBgContainer,
@@ -47,6 +45,27 @@ const Profile: React.FC = () => {
           alignContent: "center",
         }}
       >
+        {id ? (
+          <Typography.Text
+            style={{
+              fontSize: "24px",
+              paddingLeft: "20px",
+              paddingTop: "10px",
+            }}
+          >
+            Perfil do usuário
+          </Typography.Text>
+        ) : (
+          <Typography.Text
+            style={{
+              fontSize: "24px",
+              paddingLeft: "20px",
+              paddingTop: "10px",
+            }}
+          >
+            Seu perfil:
+          </Typography.Text>
+        )}
         {userData && (
           <Avatar
             style={{

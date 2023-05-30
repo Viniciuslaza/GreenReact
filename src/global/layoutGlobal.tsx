@@ -9,6 +9,8 @@ import {
   HomeOutlined,
   FormOutlined,
   UserOutlined,
+  ShopOutlined,
+  ShoppingOutlined,
 } from "@ant-design/icons";
 import { getUserById } from "services/dbFunctions";
 import { getInfoUser } from "provider/UserProvider";
@@ -53,6 +55,24 @@ export const LayoutGlobal = ({ children }: { children: ReactElement }) => {
       ),
       label: <Link to="/register-projects">Cadastrar projeto</Link>,
     },
+    userData?.role !== "visitant" && {
+      key: "products",
+      icon: (
+        <Link to="/">
+          <ShopOutlined style={{ color: "black" }} />
+        </Link>
+      ),
+      label: <Link to="/products">Produtos</Link>,
+    },
+    userData?.role !== "visitant" && {
+      key: "registerProduct",
+      icon: (
+        <Link to="/">
+          <ShoppingOutlined style={{ color: "black" }} />
+        </Link>
+      ),
+      label: <Link to="/register-products">Cadastrar produto</Link>,
+    },
     {
       key: "profile",
       icon: (
@@ -62,6 +82,7 @@ export const LayoutGlobal = ({ children }: { children: ReactElement }) => {
       ),
       label: <Link to="/perfil">Perfil</Link>,
     },
+
     // {
     //   key: "home",
     //   icon: (

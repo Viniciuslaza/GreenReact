@@ -1,4 +1,4 @@
-import { Button, Col, Divider, Input } from "antd";
+import { Button, Col, Divider, Input, Select } from "antd";
 import styled from "styled-components";
 
 export const StyledDivider = styled(Divider)`
@@ -26,4 +26,9 @@ export const ButtonContinueStyled = styled(Button)`
   margin-top: 25px;
   width: 100%;
   margin-bottom: 10px;
+`;
+
+export const StyledSelect = styled(Select)`
+  width: 100%;
+  margin-bottom: 1rem;
 `;

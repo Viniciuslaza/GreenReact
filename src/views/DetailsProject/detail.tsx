@@ -121,6 +121,33 @@ const Detail: React.FC = () => {
               </Row>
             </Row>
           )}
+          {project?.area?.name && (
+            <Row style={{ marginTop: "10px" }} align="middle">
+              <Title
+                style={{
+                  fontWeight: "500",
+                  marginTop: "7px",
+                  marginRight: "10px",
+                }}
+                level={5}
+              >
+                Area de atuação:
+              </Title>
+              <Row>
+                <Title
+                  style={{
+                    fontWeight: "400",
+                    marginTop: "7px",
+                    marginRight: "5px",
+                    paddingLeft: "15px",
+                  }}
+                  level={5}
+                >
+                  {project?.area?.name}
+                </Title>
+              </Row>
+            </Row>
+          )}
           <Typography.Title style={{ textAlign: "center" }}>
             {project?.title}
           </Typography.Title>
