@@ -64,6 +64,21 @@ export const postProjects = (values) =>
     .then((result) => result)
     .catch((error) => error);
 
+export const postProducts = (values) =>
+  addDoc(collection(db, "Products"), {
+    ...values,
+  })
+    .then((result) => result)
+    .catch((error) => error);
+
+export const getProducts = () =>
+  getDocs(collection(db, "Products")).then((querySnapshot) =>
+    querySnapshot.docs.map((doc) => ({
+      id: doc.id, // Adiciona o ID do documento ao objeto retornado
+      ...doc.data(),
+    }))
+  );
+
 export const sendResetCode = (email) =>
   sendPasswordResetEmail(auth, email)
     .then((result) => result)

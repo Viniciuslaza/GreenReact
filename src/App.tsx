@@ -18,6 +18,8 @@ import Forgot from "./views/ForgotPassword/forgot";
 import Login from "./views/Login/login";
 import { LayoutGlobal } from "./global/layoutGlobal";
 import ProfileModule from "./views/Perfil/view";
+import HomeProduct from "./views/HomeProduct/homeProduct";
+import RegisterProducts from "./views/RegisterProduct/registerProducts";
 
 const App = () => (
   <BrowserRouter>
@@ -37,6 +39,22 @@ const App = () => (
           element={
             <ProtectedRoute>
               <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="products"
+          element={
+            <ProtectedRoute>
+              <HomeProduct />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="register-products"
+          element={
+            <ProtectedRoute>
+              <RegisterProducts />
             </ProtectedRoute>
           }
         />
