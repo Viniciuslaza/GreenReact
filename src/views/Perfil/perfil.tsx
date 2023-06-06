@@ -122,47 +122,62 @@ const Profile: React.FC = () => {
                 style={{ paddingTop: "10px" }}
                 span={screenW > 500 ? 12 : 24}
               >
-                <Typography.Text
-                  style={{ fontWeight: "600", fontSize: "20px" }}
-                >
-                  CPF/CPNJ:{" "}
-                </Typography.Text>
-                <Typography.Text
-                  style={{ fontWeight: "400", fontSize: "18px" }}
-                >
-                  {userData?.cpf || userData?.cnpj}
-                </Typography.Text>
+                {!id && (
+                  <>
+                    <Typography.Text
+                      style={{ fontWeight: "600", fontSize: "20px" }}
+                    >
+                      CPF/CPNJ:{" "}
+                    </Typography.Text>
+                    <Typography.Text
+                      style={{ fontWeight: "400", fontSize: "18px" }}
+                    >
+                      {userData?.cpf || userData?.cnpj}
+                    </Typography.Text>
+                  </>
+                )}
               </Col>
+
               <Col
                 style={{ paddingTop: "10px" }}
                 span={screenW > 500 ? 12 : 24}
               >
-                <Typography.Text
-                  style={{ fontWeight: "600", fontSize: "20px" }}
-                >
-                  Logradouro:{" "}
-                </Typography.Text>
-                <Typography.Text
-                  style={{ fontWeight: "400", fontSize: "18px" }}
-                >
-                  {userData?.address}
-                </Typography.Text>
+                {!id && (
+                  <>
+                    <Typography.Text
+                      style={{ fontWeight: "600", fontSize: "20px" }}
+                    >
+                      Logradouro:{" "}
+                    </Typography.Text>
+                    <Typography.Text
+                      style={{ fontWeight: "400", fontSize: "18px" }}
+                    >
+                      {userData?.address}
+                    </Typography.Text>
+                  </>
+                )}
               </Col>
+
               <Col
                 style={{ paddingTop: "10px" }}
                 span={screenW > 500 ? 12 : 24}
               >
-                <Typography.Text
-                  style={{ fontWeight: "600", fontSize: "20px" }}
-                >
-                  Celular:{" "}
-                </Typography.Text>
-                <Typography.Text
-                  style={{ fontWeight: "400", fontSize: "18px" }}
-                >
-                  {userData?.phone}
-                </Typography.Text>
+                {!id && (
+                  <>
+                    <Typography.Text
+                      style={{ fontWeight: "600", fontSize: "20px" }}
+                    >
+                      Celular:{" "}
+                    </Typography.Text>
+                    <Typography.Text
+                      style={{ fontWeight: "400", fontSize: "18px" }}
+                    >
+                      {userData?.phone}
+                    </Typography.Text>
+                  </>
+                )}
               </Col>
+
               <Col
                 style={{ paddingTop: "10px" }}
                 span={screenW > 500 ? 12 : 24}
