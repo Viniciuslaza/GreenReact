@@ -1,6 +1,9 @@
-import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth'
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import {
+  getStorage,
+} from "firebase/storage";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -14,13 +17,14 @@ const firebaseConfig = {
   storageBucket: "eventos-d4a5b.appspot.com",
   messagingSenderId: "700979006506",
   appId: "1:700979006506:web:23f1ba369dc1da3bbe4753",
-  measurementId: "G-939G5QL93L"
+  measurementId: "G-939G5QL93L",
 };
 
 // Initialize Firebase
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore();
+const storage = getStorage(app);
 
-export { db, auth };
+export { db, auth, storage };

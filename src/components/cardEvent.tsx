@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-bitwise */
 /* eslint-disable react/destructuring-assignment */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Dropdown, MenuProps, Typography } from "antd";
 import { EllipsisOutlined, DeleteOutlined } from "@ant-design/icons";
-import { deleteProject } from "services/dbFunctions";
+import { deleteProject, getImage } from "services/dbFunctions";
 import { ImageCard } from "./style";
 
 const { Meta } = Card;
@@ -30,6 +30,14 @@ const CardHome: React.FC<Props> = ({
   navigation,
   userInfo,
 }) => {
+  const [renderImage, setRenderImage] = useState<string>();
+
+  useEffect(() => {
+    getImage("Projects", image, project_id).then((result) => {
+      setRenderImage(result);
+    });
+  }, [image, project_id]);
+
   const handleMenuClick: MenuProps["onClick"] = () => {
     deleteProject(project_id).then(() => {
       window.location.reload();
@@ -52,8 +60,9 @@ const CardHome: React.FC<Props> = ({
 
   return (
     <Card
+      loading={!renderImage}
       style={{ width: "23.95%", margin: "5px", cursor: "pointer" }}
-      cover={<ImageCard onClick={navigation} alt="example" src={image} />}
+      cover={<ImageCard onClick={navigation} alt="example" src={renderImage} />}
       actions={
         userInfo?.id === user_id && [
           <Dropdown menu={menuProps} trigger={["click"]}>

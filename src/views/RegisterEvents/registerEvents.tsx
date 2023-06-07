@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Input, Row, Typography } from "antd";
-import { getUserById, postProjects } from "services/dbFunctions";
+import {
+  Button,
+  Input,
+  Row,
+  Typography,
+  Upload,
+  UploadProps,
+  message,
+} from "antd";
+import { getUserById, postProjects, uploadImage } from "services/dbFunctions";
 import { useNavigate } from "react-router-dom";
 import { PageHeader } from "components/PageHeader";
+import { UploadOutlined } from "@ant-design/icons";
 import { getInfoUser } from "provider/UserProvider";
 import {
   ButtonContinueStyled,
@@ -16,7 +25,7 @@ import {
 const { Text } = Typography;
 
 const RegisterEvents: React.FC = () => {
-  const [image, setImage] = useState<string>();
+  const [image, setImage] = useState<any>();
   const [title, setTitle] = useState<string>();
   const [description, setDescription] = useState<string>();
   const [empty, setEmpty] = useState<boolean>();
@@ -26,6 +35,22 @@ const RegisterEvents: React.FC = () => {
   const data = getInfoUser();
   const [userData, setUserData] = useState<any>();
   const [object, setObject] = useState<any>();
+
+  const props: UploadProps = {
+    onRemove: () => {
+      setImage(null);
+    },
+    // eslint-disable-next-line consistent-return
+    beforeUpload: (file) => {
+      const isPNG = file.type === "image/png";
+      if (!isPNG) {
+        message.error(`${file.name} Não é um arquivo PNG`);
+        return false || Upload.LIST_IGNORE;
+      }
+      setImage(file);
+      return false;
+    },
+  };
 
   const areas = [
     { id: 0, name: "Biologia Celular" },
@@ -63,7 +88,7 @@ const RegisterEvents: React.FC = () => {
       const payload = {
         title,
         description,
-        image,
+        image: image?.name,
         link: linksSupport || null,
         public: true,
         area: object || null,
@@ -71,10 +96,14 @@ const RegisterEvents: React.FC = () => {
         user_hash_id: data?.user_id,
         userName: userData?.name,
       };
-      postProjects(payload).then(() => {
-        setEmpty(false);
-        navigate("/");
-      });
+      postProjects(payload)
+        .then((result) => {
+          uploadImage("Projects", image, result);
+        })
+        .finally(() => {
+          setEmpty(false);
+          navigate("/");
+        });
     } else {
       setEmpty(true);
     }
@@ -87,15 +116,12 @@ const RegisterEvents: React.FC = () => {
         <StyledDivider plain />
         <StyledCol span={24}>
           <StyledDiv>
-            <Text>Adicione uma foto</Text>
-            <InputStyled
-              onChange={(e) => {
-                setImage(e.target.value);
-              }}
-              value={image}
-              size="large"
-              placeholder="Imagem"
-            />
+            <Text>Adicione uma foto - PNG</Text>
+            <div style={{ marginTop: "5px", marginBottom: "10px" }}>
+              <Upload maxCount={1} {...props}>
+                <Button icon={<UploadOutlined />}>Selecione uma foto</Button>
+              </Upload>
+            </div>
             <Text>Escreva o titulo do projeto</Text>
             <InputStyled
               maxLength={100}

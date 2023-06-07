@@ -14,7 +14,7 @@ import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { DisplayPage, LayoutMain } from "components/MenuBar/style";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getProjectById } from "services/dbFunctions";
+import { getImage, getProjectById } from "services/dbFunctions";
 
 import { FullContentSpin } from "components/FullContentSpin";
 import { getNameLetters, stringToColor } from "provider/UserProvider";
@@ -24,42 +24,24 @@ const Detail: React.FC = () => {
   const { id } = useParams();
   const [project, setProject] = useState<any>();
   const [isLoading, setLoading] = useState(false);
+  const [renderImage, setRenderImage] = useState<string>();
   const navigate = useNavigate();
 
   const { Title } = Typography;
-
-  const [percent, setPercent] = useState<number>(0);
-
-  const increase = () => {
-    setPercent((prevPercent) => {
-      const newPercent = prevPercent + 10;
-      if (newPercent > 100) {
-        return 100;
-      }
-      return newPercent;
-    });
-  };
-
-  const decline = () => {
-    setPercent((prevPercent) => {
-      const newPercent = prevPercent - 10;
-      if (newPercent < 0) {
-        return 0;
-      }
-      return newPercent;
-    });
-  };
 
   useEffect(() => {
     setLoading(true);
     getProjectById(id)
       .then((result: any) => {
         setProject(result);
+        getImage("Projects", result.image, result.projectId).then((item) => {
+          setRenderImage(item);
+        });
       })
       .finally(() => setLoading(false));
   }, [id]);
 
-  if (isLoading)
+  if (isLoading || !renderImage)
     return <FullContentSpin style={{ height: "calc(100vh - 3.5rem)" }} />;
   return (
     <>
@@ -72,7 +54,7 @@ const Detail: React.FC = () => {
       <DisplayPage>
         <LayoutMain>
           <StyledImageDiv>
-            <StyledImage src={project?.image} />
+            <StyledImage src={renderImage} />
           </StyledImageDiv>
           {project && (
             <Row
@@ -155,16 +137,10 @@ const Detail: React.FC = () => {
             {project?.description}
           </Typography.Text>
           <Typography.Text style={{ textAlign: "center" }}>
-            <a href={project?.link}>{project?.link}</a>
+            <a target="_blank" href={project?.link} rel="noreferrer">
+              {project?.link}
+            </a>
           </Typography.Text>
-          <Typography.Text style={{ marginTop: "20px", fontSize: "16px" }}>
-            Quanto você gostou disso?
-          </Typography.Text>
-          <Progress percent={percent} />
-          <Button.Group>
-            <Button onClick={decline} icon={<MinusOutlined />} />
-            <Button onClick={increase} icon={<PlusOutlined />} />
-          </Button.Group>
         </LayoutMain>
       </DisplayPage>
     </>

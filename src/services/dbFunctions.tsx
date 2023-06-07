@@ -17,7 +17,8 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { auth, db } from "./firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { auth, db, storage } from "./firebase";
 
 export const createUser = (email, password, payload) =>
   createUserWithEmailAndPassword(auth, email, password)
@@ -57,12 +58,12 @@ export const getProjectById = (projectId) =>
     return null;
   });
 
-export const postProjects = (values) =>
-  addDoc(collection(db, "Projects"), {
+export const postProjects = async (values) => {
+  const snap = await addDoc(collection(db, "Projects"), {
     ...values,
-  })
-    .then((result) => result)
-    .catch((error) => error);
+  });
+  return snap.id;
+};
 
 export const postProducts = (values) =>
   addDoc(collection(db, "Products"), {
@@ -85,3 +86,27 @@ export const sendResetCode = (email) =>
     .catch((error) => error);
 
 export const signOutUser = () => signOut(auth);
+
+export const uploadImage = async (local, imageFile, id) => {
+  const imageRef = ref(storage, `images/${local}/${id}/${imageFile.name}`);
+  try {
+    await uploadBytes(imageRef, imageFile);
+  } catch (error) {
+    return error;
+  }
+  return imageFile.name;
+};
+
+/**
+ * Gets the image
+ * @param {*} userId - franchisee Id
+ * @param {*} imageFile - name of the image file
+ * @param {*} tipId - tip Id
+ * @returns - returns the image url
+ */
+export const getImage = async (local, imageName, id) => {
+  const imageUrl = await getDownloadURL(
+    ref(storage, `images/${local}/${id}/${imageName}`)
+  );
+  return imageUrl;
+};
