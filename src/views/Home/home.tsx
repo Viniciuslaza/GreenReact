@@ -44,7 +44,7 @@ const Home: React.FC = () => {
               >
                 {projects?.map((item, i) => (
                   <CardHome
-                    key={i}
+                    key={item.id}
                     user_id={item.user}
                     userInfo={userData}
                     project_id={item.id}

@@ -65,13 +65,12 @@ export const postProjects = async (values) => {
   return snap.id;
 };
 
-export const postProducts = (values) =>
-  addDoc(collection(db, "Products"), {
+export const postProducts = async (values) => {
+  const snap = await addDoc(collection(db, "Products"), {
     ...values,
-  })
-    .then((result) => result)
-    .catch((error) => error);
-
+  });
+  return snap.id;
+};
 export const getProducts = () =>
   getDocs(collection(db, "Products")).then((querySnapshot) =>
     querySnapshot.docs.map((doc) => ({

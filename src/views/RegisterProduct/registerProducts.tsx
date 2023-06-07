@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, InputNumber, Row } from "antd";
-import { getUserById, postProducts } from "services/dbFunctions";
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Row,
+  Upload,
+  UploadProps,
+  message,
+} from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import { getUserById, postProducts, uploadImage } from "services/dbFunctions";
 import { useNavigate } from "react-router-dom";
 import { PageHeader } from "components/PageHeader";
 import { getInfoUser } from "provider/UserProvider";
@@ -19,6 +29,26 @@ const RegisterProducts: React.FC = () => {
   const data = getInfoUser();
   const [userData, setUserData] = useState<any>();
   const [form] = Form.useForm();
+  const [image, setImage] = useState<any>();
+
+  const props: UploadProps = {
+    onRemove: () => {
+      setImage(null);
+    },
+    // eslint-disable-next-line consistent-return
+    beforeUpload: (file) => {
+      const isPNG =
+        file.type === "image/png" ||
+        file.type === "image/jpg" ||
+        file.type === "image/jpeg";
+      if (!isPNG) {
+        message.error(`${file.name} Não é um arquivo de imagem`);
+        return false || Upload.LIST_IGNORE;
+      }
+      setImage(file);
+      return false;
+    },
+  };
 
   useEffect(() => {
     getUserById(data?.user_id).then((result: any) => {
@@ -29,15 +59,20 @@ const RegisterProducts: React.FC = () => {
   const handleRegisterProduct = (values) => {
     const payload = {
       ...values,
+      image: image.name,
       description: values?.description || null,
       phone: userData?.phone,
       user: userData?.id,
       user_hash_id: data?.user_id,
       userName: userData?.name,
     };
-    postProducts(payload).then(() => {
-      navigate("/products");
-    });
+    postProducts(payload)
+      .then((result) => {
+        uploadImage("Products", image, result);
+      })
+      .finally(() => {
+        navigate("/products");
+      });
   };
 
   return (
@@ -59,7 +94,9 @@ const RegisterProducts: React.FC = () => {
                 name="image"
                 label="Imagem do produto"
               >
-                <InputStyled size="large" placeholder="Imagem" />
+                <Upload maxCount={1} {...props}>
+                  <Button icon={<UploadOutlined />}>Selecione uma foto</Button>
+                </Upload>
               </Form.Item>
               <Form.Item
                 rules={[{ required: true, message: "Campo obrigatório" }]}

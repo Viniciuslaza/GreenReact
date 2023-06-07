@@ -42,9 +42,12 @@ const RegisterEvents: React.FC = () => {
     },
     // eslint-disable-next-line consistent-return
     beforeUpload: (file) => {
-      const isPNG = file.type === "image/png";
+      const isPNG =
+        file.type === "image/png" ||
+        file.type === "image/jpg" ||
+        file.type === "image/jpeg";
       if (!isPNG) {
-        message.error(`${file.name} Não é um arquivo PNG`);
+        message.error(`${file.name} Não é um arquivo de imagem`);
         return false || Upload.LIST_IGNORE;
       }
       setImage(file);

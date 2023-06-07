@@ -52,6 +52,8 @@ const HomeProduct: React.FC = () => {
               >
                 {products?.map((item) => (
                   <CardProduct
+                    key={item.id}
+                    product_id={item.id}
                     description={item?.description}
                     image={item?.image}
                     location={item?.location}

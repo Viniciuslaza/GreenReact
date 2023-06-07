@@ -62,7 +62,16 @@ const CardHome: React.FC<Props> = ({
     <Card
       loading={!renderImage}
       style={{ width: "23.95%", margin: "5px", cursor: "pointer" }}
-      cover={<ImageCard onClick={navigation} alt="example" src={renderImage} />}
+      cover={
+        <ImageCard
+          onClick={navigation}
+          alt="example"
+          src={
+            renderImage ||
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ98ey9M7Rf1-xyFDBxU1t7Bxwf7U44LsDzVUpR_kmm&s"
+          }
+        />
+      }
       actions={
         userInfo?.id === user_id && [
           <Dropdown menu={menuProps} trigger={["click"]}>
