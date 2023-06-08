@@ -1,5 +1,9 @@
 import { Avatar, Col, Row, Typography, theme } from "antd";
-import { LinkedinOutlined, InstagramOutlined } from "@ant-design/icons";
+import {
+  LinkedinOutlined,
+  InstagramOutlined,
+  FormOutlined,
+} from "@ant-design/icons";
 import React, { useState, useEffect } from "react";
 import {
   getInfoUser,
@@ -8,10 +12,11 @@ import {
 } from "provider/UserProvider";
 import { getUserById } from "services/dbFunctions";
 import { FullContentSpin } from "components/FullContentSpin";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { LayoutMain } from "./Style";
 
 const Profile: React.FC = () => {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState<any>();
   const data = getInfoUser();
   const [isLoading, setLoading] = useState(false);
@@ -29,7 +34,11 @@ const Profile: React.FC = () => {
     setLoading(true);
     getUserById(id || data?.user_id)
       .then((result: any) => {
-        setUserData(result[0]);
+        if (result[0]) {
+          setUserData(result[0]);
+        } else {
+          navigate("/");
+        }
       })
       .finally(() => setLoading(false));
   }, []);
@@ -45,27 +54,39 @@ const Profile: React.FC = () => {
           alignContent: "center",
         }}
       >
-        {id ? (
-          <Typography.Text
-            style={{
-              fontSize: "24px",
-              paddingLeft: "20px",
-              paddingTop: "10px",
-            }}
-          >
-            Perfil do usuário
-          </Typography.Text>
-        ) : (
-          <Typography.Text
-            style={{
-              fontSize: "24px",
-              paddingLeft: "20px",
-              paddingTop: "10px",
-            }}
-          >
-            Seu perfil:
-          </Typography.Text>
-        )}
+        <Row>
+          <Col span={22}>
+            {id && id !== data?.user_id ? (
+              <Typography.Text
+                style={{
+                  fontSize: "24px",
+                  paddingLeft: "20px",
+                  paddingTop: "10px",
+                }}
+              >
+                Perfil do usuário
+              </Typography.Text>
+            ) : (
+              <Typography.Text
+                style={{
+                  fontSize: "24px",
+                  paddingLeft: "20px",
+                  paddingTop: "10px",
+                }}
+              >
+                Seu perfil:
+              </Typography.Text>
+            )}
+          </Col>
+          {(!id || id === data?.user_id) && (
+            <Col
+              span={2}
+              style={{ marginTop: "10px", fontSize: "30px", cursor: "pointer" }}
+            >
+              <FormOutlined />
+            </Col>
+          )}
+        </Row>
         {userData && (
           <Avatar
             style={{
@@ -122,7 +143,7 @@ const Profile: React.FC = () => {
                 style={{ paddingTop: "10px" }}
                 span={screenW > 500 ? 12 : 24}
               >
-                {!id && (
+                {(!id || id === data?.user_id) && (
                   <>
                     <Typography.Text
                       style={{ fontWeight: "600", fontSize: "20px" }}
@@ -142,7 +163,7 @@ const Profile: React.FC = () => {
                 style={{ paddingTop: "10px" }}
                 span={screenW > 500 ? 12 : 24}
               >
-                {!id && (
+                {(!id || id === data?.user_id) && (
                   <>
                     <Typography.Text
                       style={{ fontWeight: "600", fontSize: "20px" }}
@@ -162,7 +183,7 @@ const Profile: React.FC = () => {
                 style={{ paddingTop: "10px" }}
                 span={screenW > 500 ? 12 : 24}
               >
-                {!id && (
+                {(!id || id === data?.user_id) && (
                   <>
                     <Typography.Text
                       style={{ fontWeight: "600", fontSize: "20px" }}

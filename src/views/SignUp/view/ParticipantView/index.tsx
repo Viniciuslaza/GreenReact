@@ -29,6 +29,8 @@ const ParticipantRegistration: React.FC = () => {
   const handleSignUp = (values: IUser) => {
     const payloadValues = {
       ...values,
+      instagram: values.instagram || null,
+      linkedIn: values.linkedin || null,
       role: "participant",
     };
     delete payloadValues.password;
@@ -75,11 +77,11 @@ const ParticipantRegistration: React.FC = () => {
                     },
                     {
                       max: 11,
-                      message: "O CPF deve possuir 14 dígitos",
+                      message: "O CPF deve possuir 11 dígitos",
                     },
                     {
                       min: 11,
-                      message: "O CPF deve possuir 14 dígitos",
+                      message: "O CPF deve possuir 11 dígitos",
                     },
                   ]}
                   name="cpf"
