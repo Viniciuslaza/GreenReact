@@ -95,7 +95,8 @@ const Login: React.FC = () => {
                 )
               }
             />
-            {errorCode === "auth/wrong-password" && (
+
+            {(errorCode === "auth/wrong-password" || errorCode === "auth/user-not-found") && (
               <Typography.Text style={{ color: "red" }}>
                 Senha ou E-mail estão incorretos
               </Typography.Text>

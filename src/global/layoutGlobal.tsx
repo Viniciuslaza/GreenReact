@@ -55,7 +55,7 @@ export const LayoutGlobal = ({ children }: { children: ReactElement }) => {
       ),
       label: <Link to="/register-projects">Cadastrar projeto</Link>,
     },
-    userData?.role !== "visitant" && {
+    {
       key: "products",
       icon: (
         <Link to="/">

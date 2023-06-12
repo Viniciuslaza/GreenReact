@@ -3,7 +3,10 @@
 /* eslint-disable object-shorthand */
 
 import {
+  EmailAuthProvider,
   createUserWithEmailAndPassword,
+  getAuth,
+  reauthenticateWithCredential,
   sendPasswordResetEmail,
   signOut,
 } from "firebase/auth";
@@ -29,6 +32,32 @@ export const createUser = (email, password, payload) =>
       });
     })
     .catch((err) => err.message);
+
+export const refreshUser = (passwordAgain, type) => {
+  const autenticado = getAuth();
+  const userInfo = autenticado.currentUser;
+  const credential = EmailAuthProvider.credential(
+    userInfo.email,
+    passwordAgain
+  );
+  // eslint-disable-next-line consistent-return
+  reauthenticateWithCredential(userInfo, credential).then(() => {
+    if (type === "delete") {
+      deleteUserAuth(userInfo);
+    } else {
+      return null;
+    }
+  });
+};
+
+export const deleteUserAuth = (user) =>
+  user
+    .delete()
+    .finally(() => {
+      localStorage.clear();
+      window.location.reload();
+    })
+    .catch(() => {});
 
 export const getUserById = async (userId) => {
   const q = query(collection(db, "Users"), where("id", "==", userId));

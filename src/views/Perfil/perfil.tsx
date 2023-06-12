@@ -1,8 +1,20 @@
-import { Avatar, Col, Row, Typography, theme } from "antd";
+import {
+  Avatar,
+  Col,
+  Dropdown,
+  Form,
+  Input,
+  MenuProps,
+  Modal,
+  Row,
+  Typography,
+  theme,
+} from "antd";
 import {
   LinkedinOutlined,
   InstagramOutlined,
-  FormOutlined,
+  MoreOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
 import React, { useState, useEffect } from "react";
 import {
@@ -10,7 +22,7 @@ import {
   getNameLetters,
   stringToColor,
 } from "provider/UserProvider";
-import { getUserById } from "services/dbFunctions";
+import { getUserById, refreshUser } from "services/dbFunctions";
 import { FullContentSpin } from "components/FullContentSpin";
 import { useNavigate, useParams } from "react-router-dom";
 import { LayoutMain } from "./Style";
@@ -20,6 +32,8 @@ const Profile: React.FC = () => {
   const [userData, setUserData] = useState<any>();
   const data = getInfoUser();
   const [isLoading, setLoading] = useState(false);
+  const [form] = Form.useForm();
+  const [modalConfirm, setModalConfirm] = useState(false);
   const { id } = useParams();
   const {
     token: { colorBgContainer },
@@ -29,6 +43,19 @@ const Profile: React.FC = () => {
   window.addEventListener("resize", () => {
     setScreenW(window.screen.width);
   });
+
+  const handleDeleteUser = (values) => {
+    refreshUser(values.password, "delete");
+  };
+
+  const items: MenuProps["items"] = [
+    {
+      label: "Excluir conta",
+      key: "1",
+      icon: <DeleteOutlined />,
+      onClick: () => setModalConfirm(true),
+    },
+  ];
 
   useEffect(() => {
     setLoading(true);
@@ -79,12 +106,9 @@ const Profile: React.FC = () => {
             )}
           </Col>
           {(!id || id === data?.user_id) && (
-            <Col
-              span={2}
-              style={{ marginTop: "10px", fontSize: "30px", cursor: "pointer" }}
-            >
-              <FormOutlined />
-            </Col>
+            <Dropdown menu={{ items }} trigger={["click"]}>
+              <MoreOutlined style={{ fontSize: "30px", marginTop: "10px" }} />
+            </Dropdown>
           )}
         </Row>
         {userData && (
@@ -256,6 +280,32 @@ const Profile: React.FC = () => {
             </>
           )}
         </Row>
+        <Modal
+          title="Confirmação de exclusão de conta"
+          open={modalConfirm}
+          onOk={form.submit}
+          okText="Concordo"
+          cancelText="Fechar"
+          onCancel={() => setModalConfirm(false)}
+        >
+          <Form
+            style={{ padding: "20px" }}
+            form={form}
+            onFinish={handleDeleteUser}
+            layout="vertical"
+            requiredMark={false}
+            name="dynamic_form_complex"
+            autoComplete="off"
+          >
+            <Form.Item
+              name="password"
+              label="Confirme sua senha"
+              rules={[{ required: true }]}
+            >
+              <Input />
+            </Form.Item>
+          </Form>
+        </Modal>
       </LayoutMain>
     </>
   );
