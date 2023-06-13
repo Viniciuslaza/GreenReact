@@ -54,7 +54,7 @@ const Detail: React.FC = () => {
       <DisplayPage>
         <LayoutMain>
           <StyledImageDiv>
-            <StyledImage src={renderImage} />
+            <StyledImage height={350} width="99.9%" src={renderImage} />
           </StyledImageDiv>
           {project && (
             <Row

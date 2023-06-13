@@ -1,3 +1,4 @@
+import { Image } from "antd";
 import styled from "styled-components";
 
 export const StyledImageDiv = styled.div`
@@ -6,9 +7,6 @@ export const StyledImageDiv = styled.div`
   border-radius: 18px;
 `;
 
-export const StyledImage = styled.img`
+export const StyledImage = styled(Image)`
   object-fit: cover;
-  width: 99.9%;
-  height: 350px;
 `;
-
