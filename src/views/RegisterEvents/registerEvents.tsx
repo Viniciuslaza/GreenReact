@@ -119,7 +119,7 @@ const RegisterEvents: React.FC = () => {
         <StyledDivider plain />
         <StyledCol span={24}>
           <StyledDiv>
-            <Text>Adicione uma foto - PNG</Text>
+            <Text>Adicione uma foto</Text>
             <div style={{ marginTop: "5px", marginBottom: "10px" }}>
               <Upload maxCount={1} {...props}>
                 <Button icon={<UploadOutlined />}>Selecione uma foto</Button>

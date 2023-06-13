@@ -60,7 +60,6 @@ const CardHome: React.FC<Props> = ({
 
   return (
     <Card
-      loading={!renderImage}
       style={{ width: "23.95%", margin: "5px", cursor: "pointer" }}
       cover={
         <ImageCard
